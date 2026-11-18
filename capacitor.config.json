@@ -1,0 +1,8 @@
+{
+  "appId": "org.cortereal.dejair",
+  "appName": "Trilhas do Dejair",
+  "webDir": "www",
+  "backgroundColor": "#FFF6EA",
+  "ios": { "contentInset": "never", "scrollEnabled": true },
+  "android": { "allowMixedContent": false }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Dejair</string>
+    <string name="title_activity_main">Trilhas do Dejair</string>
+    <string name="package_name">org.cortereal.dejair</string>
+    <string name="custom_url_scheme">org.cortereal.dejair</string>
+</resources>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trilhas do Dejair</title>
+<meta name="description" content="Trilhas de estudo em forma de jogo, com o gato Dejair: História, Geografia e Ciências do 5º ano, com quizzes, estrelas, medalhas e nota final.">
+<meta name="theme-color" content="#FFF6EA">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dejair">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icone-192.png">
+<link rel="apple-touch-icon" href="icons/icone-180.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="sem-barra">
+<div id="palco">
+  <main id="app"></main>
+  <nav id="nav" aria-label="Seções do app" hidden></nav>
+</div>
+<div id="avisos" aria-live="polite"></div>
+<canvas id="confete" aria-hidden="true"></canvas>
+<noscript>Este app precisa de JavaScript para funcionar.</noscript>
+
+<script src="js/conteudo/historia.js"></script>
+<script src="js/conteudo/geografia.js"></script>
+<script src="js/conteudo/ciencias.js"></script>
+<script src="js/dejair.js"></script>
+<script src="js/progresso.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
