@@ -32,5 +32,8 @@ window.DEJAIR_CONTEUDO.push({
 - `vf` (verdadeiro ou falso): `r: true` ou `r: false`, sem opções.
 - `ord` (ordenar): `o` já vem **na ordem correta**, de 3 a 5 itens. O app embaralha.
 - `par` (ligar pares): 3 ou 4 pares `[esquerda, direita]`.
+- `x` (opcional, em qualquer tipo) é o **texto de apoio** mostrado acima da pergunta: uma crônica, um anúncio, uma tabela, um gráfico ou uma figura, em HTML. Ele também aparece na lista "para rever". Para usar o mesmo texto em várias questões, guarde-o em uma constante, como em `portugues.js` (objeto `T`). `matematica.js` tem funções prontas para fração (`fr`), tabela, gráfico de barras, malha quadriculada, ângulo e polígono.
+- Arquivo com constantes ou funções próprias deve ficar dentro de `(function () { ... })();`, para os nomes não se misturarem com os de outra matéria.
+- Em `vf`, não use entidades HTML (`&nbsp;`, `&lt;`) na afirmação: o teste automático compara o texto que aparece na tela com o do arquivo.
 - `e` é a explicação mostrada depois da resposta, certa ou errada. Ela ensina; não repete só "a resposta é X".
 - Nada de "todas as anteriores" ou "nenhuma das anteriores": a ordem muda a cada partida.
