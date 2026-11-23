@@ -4,7 +4,7 @@
   const P = window.Progresso, D = window.Dejair;
   const app = document.getElementById('app'), nav = document.getElementById('nav');
   const VERSAO = '1.0.0';
-  const EM_BREVE = [{ nome: 'Matemática', icone: '🧮' }, { nome: 'Português', icone: '📚' }];
+  const EM_BREVE = [];   // matérias anunciadas e ainda sem conteúdo: { nome, icone }
   const QUESTOES_FASE = 8, QUESTOES_PROVA = 12;
 
   /* ---------- utilidades ---------- */
@@ -99,7 +99,7 @@
     app.innerHTML = `<section class="boas-vindas">
       <div class="bv-gato">${gato('oi', 'flutua')}</div>
       <h1>Oi! Eu sou o <b>Dejair</b> 🐾</h1>
-      <p>Sou um gato curioso e vou trilhar com você por <b>História</b>, <b>Geografia</b> e <b>Ciências</b>. A cada fase você ganha estrelas, sardinhas e medalhas!</p>
+      <p>Sou um gato curioso e vou trilhar com você por <b>História</b>, <b>Geografia</b>, <b>Ciências</b>, <b>Matemática</b> e <b>Português</b>. A cada fase você ganha estrelas, sardinhas e medalhas!</p>
       <form id="form-nome" autocomplete="off">
         <label for="nome">Como eu posso te chamar?</label>
         <input id="nome" name="nome" type="text" maxlength="16" placeholder="Seu nome ou apelido" autocapitalize="words" enterkeyhint="go">
@@ -192,7 +192,10 @@
   const NIVEL = ['', 'fácil', 'médio', 'desafio'];
   const INSTRUCAO = { mc: 'Escolha a resposta certa', vf: 'Verdadeiro ou falso?', lac: 'Complete a frase', ord: 'Toque nos itens na ordem certa', par: 'Toque em um item de cada lado para ligar' };
 
-  function corpoQuestao() {
+  /* Texto de apoio (campo x): crônica, anúncio, tabela, gráfico ou figura que a questão pede para ler. */
+  const apoio = q => (q.x ? `<div class="apoio">${q.x}</div>` : '');
+  function corpoQuestao() { return apoio(J.itens[J.pos].q) + corpoTipo(); }
+  function corpoTipo() {
     const q = J.itens[J.pos].q, fim = J.fase === 'resposta';
     if (q.t === 'mc' || q.t === 'lac') {
       const frase = q.t === 'lac' ? q.p.replace('___', `<span class="lacuna ${J.sel !== null ? 'cheia' : ''} ${fim ? (J.certo ? 'ok' : 'ruim') : ''}">${J.sel !== null ? q.o[J.sel] : '&nbsp;'}</span>`) : q.p;
@@ -289,7 +292,7 @@
       <div class="res-estrelas">${[0, 1, 2].map(i => `<i class="${i < r.estrelas ? 'on' : ''}" style="animation-delay:${.25 + i * .22}s">★</i>`).join('')}</div>
       <div class="ganhos"><span>+${r.xp} XP</span><span>+${r.peixes} 🐟</span></div>
       ${destaques.join('')}
-      ${erros.length ? `<h2 class="titulo">🔍 Para rever</h2><div class="rever">${erros.map(q => `<details class="rev"><summary>${q.p.replace('___', '_____')}</summary><p><b>Resposta:</b> ${respostaCerta(q)}</p><p>${q.e}</p></details>`).join('')}</div>` : '<p class="tudo-certo">Nenhum erro nesta rodada. Gabaritou! 😻</p>'}
+      ${erros.length ? `<h2 class="titulo">🔍 Para rever</h2><div class="rever">${erros.map(q => `<details class="rev"><summary>${q.p.replace('___', '_____')}</summary>${apoio(q)}<p><b>Resposta:</b> ${respostaCerta(q)}</p><p>${q.e}</p></details>`).join('')}</div>` : '<p class="tudo-certo">Nenhum erro nesta rodada. Gabaritou! 😻</p>'}
       <div class="res-botoes"><button class="btn grande" data-ir="#/m/${m.id}">Voltar para a trilha</button>
         <button class="btn grande fantasma" data-ac="de-novo">🔄 Jogar de novo</button></div></section>`;
     Som.toca(faixa === 'baixa' ? 'toque' : 'festa');

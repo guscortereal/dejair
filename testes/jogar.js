@@ -55,8 +55,9 @@ async function jogaAteOFim(page, erros) {
     confere(true, 'boas-vindas aparece na primeira vez');
     await page.fill('#nome', 'Teste <b>'); await page.click('.boas-vindas .btn');
     await page.waitForSelector('.materias');
-    confere(await page.locator('.materia:not(.em-breve)').count() === 3, 'início mostra as 3 matérias');
-    confere(await page.locator('.materia.em-breve').count() === 2, 'início mostra 2 matérias "em breve"');
+    const nMat = await page.evaluate(() => window.DEJAIR_CONTEUDO.length);
+    confere(nMat === 5 && await page.locator('.materia:not(.em-breve)').count() === nMat, `início mostra as ${nMat} matérias`);
+    confere(await page.locator('.materia.em-breve').count() === 0, 'nenhuma matéria ficou como "em breve"');
     confere(!(await page.content()).includes('Teste <b>'), 'nome digitado é escapado');
 
     // todas as fases de todas as matérias abrem e mostram resumo
@@ -97,6 +98,25 @@ async function jogaAteOFim(page, erros) {
     confere((await page.locator('.nota-final small').textContent()) === 'Nota final', 'Provão mostra "Nota final"');
     confere((await page.locator('.nota-final b').textContent()) === '9,2', 'nota final 9,2 com 11 de 12');
 
+    // texto de apoio (crônica, anúncio, tabela, figura) aparece na questão e na lista "para rever"
+    await page.goto(`${URL}#/jogar/portugues/interpretacao`); await page.waitForSelector('#corpo .apoio');
+    confere((await page.locator('#corpo .apoio').textContent()).length > 200, 'questão de interpretação mostra o texto de apoio');
+    await jogaAteOFim(page, 8);
+    confere(await page.locator('.rev .apoio').count() >= 1, 'texto de apoio aparece na lista "para rever"');
+    await page.goto(`${URL}#/jogar/portugues/anuncio`); await page.waitForSelector('#corpo');
+    for (let i = 0; i < 8 && !(await page.locator('#corpo .anuncio').count()); i++) { await responde(page, true); await page.click('[data-ac="continuar"]'); }
+    confere(await page.locator('#corpo .anuncio').count() === 1, 'questão de anúncio mostra o anúncio');
+    for (const [fase, sel] of [['graficos', '.apoio table'], ['graficos', '.apoio svg'], ['angulos', '.apoio svg'], ['fracoes', '.fr']]) {
+      let achou = false;
+      for (let k = 0; k < 6 && !achou; k++) {
+        await page.goto(`${URL}#/`); await page.goto(`${URL}#/jogar/matematica/${fase}`); await page.waitForSelector('#corpo');
+        for (let i = 0; i < 8 && !achou; i++) { achou = !!(await page.locator(`#corpo ${sel}`).count()); if (!achou && i < 7) { await responde(page, true); await page.click('[data-ac="continuar"]'); } }
+        if (!achou) { await responde(page, true); await page.click('[data-ac="continuar"]'); await page.waitForSelector('.nota-final'); }
+      }
+      confere(achou, `Matemática/${fase}: questão com ${sel}`);
+    }
+    await page.goto(`${URL}#/`);
+
     // sair no meio pede confirmação e não registra
     await page.goto(`${URL}#/m/${mapa[1].id}/${mapa[1].topicos[0]}`); await page.click('.rodape .btn'); await page.waitForSelector('#corpo');
     await responde(page, true); await page.click('[data-ac="sair"]'); await page.waitForSelector('.caixa'); await page.click('.caixa [data-r="1"]');
@@ -109,6 +129,7 @@ async function jogaAteOFim(page, erros) {
     confere(antes === await page.evaluate(() => JSON.stringify([window.Progresso.e.xp, window.Progresso.e.peixes, window.Progresso.totalEstrelas()])), `progresso persiste ao recarregar ${antes}`);
 
     // lojinha: compra e uso
+    await page.evaluate(() => { window.Progresso.e.peixes = 60; window.Progresso.salvar(); });   // quantia conhecida: dá para a gravata, não para a coroa
     await page.click('.aba[data-ir="#/loja"]'); await page.waitForSelector('.itens');
     const peixes = await page.evaluate(() => window.Progresso.e.peixes);
     await page.click('[data-ac="comprar"][data-id="gravata"]'); await page.click('.caixa [data-r="1"]');
@@ -122,7 +143,7 @@ async function jogaAteOFim(page, erros) {
     confere(await page.locator('.medalha.on').count() >= 5, `conquistas liberadas: ${await page.locator('.medalha.on').count()}`);
     await page.click('.aba[data-ir="#/evolucao"]'); await page.waitForSelector('.grafico');
     confere(await page.locator('.grafico .col').count() >= 5, 'gráfico de notas com as partidas');
-    confere(await page.locator('.boletim').count() === 3, 'boletim das 3 matérias');
+    confere(await page.locator('.boletim').count() === nMat, `boletim das ${nMat} matérias`);
 
     // cópia nas Preferências do app nativo (simulada) repõe o progresso se o navegador interno for limpo
     const guardado = await page.evaluate(() => localStorage.getItem('dejair_trilhas_v1'));
@@ -140,7 +161,15 @@ async function jogaAteOFim(page, erros) {
     for (const w of [320, 390, 768]) {
       await page.setViewportSize({ width: w, height: 800 }); await page.fill('#nome', 'Ana'); await page.click('.boas-vindas .btn'); await page.waitForSelector('.materias');
       let larg = 0;
-      for (const h of ['#/', '#/m/historia', '#/m/geografia/norte', '#/jogar/ciencias/digestorio', '#/loja', '#/conquistas', '#/evolucao']) { await page.goto(URL + h); await page.waitForTimeout(80); larg = Math.max(larg, await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)); }
+      for (const h of ['#/', '#/m/historia', '#/m/geografia/norte', '#/m/matematica', '#/m/portugues/cronica', '#/m/matematica/fracoes', '#/jogar/ciencias/digestorio', '#/loja', '#/conquistas', '#/evolucao']) { await page.goto(URL + h); await page.waitForTimeout(80); larg = Math.max(larg, await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)); }
+      // fases com texto, anúncio, tabela, gráfico e figura: confere todas as questões, uma por uma
+      for (const f of ['portugues/interpretacao', 'portugues/anuncio', 'portugues/discurso', 'matematica/graficos', 'matematica/area', 'matematica/fracoes', 'matematica/porcentagem']) {
+        await page.goto(URL + '#/'); await page.goto(`${URL}#/jogar/${f}`); await page.waitForSelector('#corpo');
+        for (let i = 0; i < 8; i++) {
+          larg = Math.max(larg, await page.evaluate(() => Math.max(document.documentElement.scrollWidth - window.innerWidth, ...[...document.querySelectorAll('#corpo .op, #corpo .pergunta')].map(el => el.scrollWidth - el.clientWidth))));
+          await responde(page, true); if (i < 7) await page.click('[data-ac="continuar"]');
+        }
+      }
       confere(larg <= 0, `sem rolagem lateral em ${w}px`);
       await page.goto(URL + '#/evolucao'); await page.waitForSelector('[data-ac="apagar"]'); await page.click('[data-ac="apagar"]'); await page.click('.caixa [data-r="1"]'); await page.waitForSelector('.boas-vindas');
     }

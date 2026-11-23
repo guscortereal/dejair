@@ -164,7 +164,7 @@ A página de especificações da Apple hoje se contradiz sobre qual tamanho de i
 **Texto promocional** (até 170 caracteres):
 
 ```
-Estude História, Geografia e Ciências do 5º ano jogando com o gato Dejair. Fases curtas, nota no fim, estrelas, medalhas e sardinhas para vestir o mascote.
+Estude Matemática, Português, História, Geografia e Ciências do 5º ano jogando com o gato Dejair. Fases curtas, nota no fim, estrelas, medalhas e sardinhas.
 ```
 
 **Descrição:**
@@ -178,7 +178,9 @@ O QUE TEM NESTA VERSÃO
 • História: cidadania, abolição da escravidão, Proclamação da República, República das Oligarquias e Era Vargas.
 • Geografia: as cinco regiões do Brasil, com estados, capitais, clima, vegetação e economia.
 • Ciências: nutrição do corpo humano e os sistemas digestório, respiratório, circulatório e urinário.
-• 22 fases e 242 questões de cinco tipos: múltipla escolha, verdadeiro ou falso, completar a frase, colocar em ordem e ligar os pares.
+• Matemática: numeração, as quatro operações, problemas, expressões, frações, decimais, porcentagem, tempo, gráficos, área, ângulos e figuras geométricas.
+• Português: crônica, anúncio publicitário, interpretação de texto, vocabulário, tempos verbais, narrativa e discurso direto e indireto.
+• 43 fases e 551 questões de cinco tipos: múltipla escolha, verdadeiro ou falso, completar a frase, colocar em ordem e ligar os pares. Várias trazem textos, tabelas, gráficos e figuras.
 • Um Provão em cada matéria, com a nota final.
 
 PARA NÃO PARAR DE JOGAR
@@ -193,13 +195,13 @@ FEITO COM CUIDADO
 • Não coleta nenhum dado: o nome e o progresso ficam só no aparelho.
 • Errar faz parte: não há cronômetro nem vidas, e toda resposta vem com explicação.
 
-Conteúdo alinhado ao 5º ano do Ensino Fundamental. Matemática e Português chegam nas próximas versões.
+Conteúdo alinhado ao 5º ano do Ensino Fundamental.
 ```
 
 **Palavras-chave** (até 100 caracteres, separadas por vírgula, sem espaço):
 
 ```
-quiz,estudar,escola,5 ano,história,geografia,ciências,prova,revisão,fundamental,gato,perguntas
+quiz,estudar,escola,5 ano,matemática,português,história,geografia,ciências,prova,revisão,gato
 ```
 
 **URL de suporte:** o endereço do passo 5. **URL de marketing:** deixe em branco.
@@ -217,7 +219,7 @@ quiz,estudar,escola,5 ano,história,geografia,ciências,prova,revisão,fundament
 ```
 Trilhas do Dejair is an offline educational quiz game for Brazilian elementary school students (ages 9-11), in Portuguese.
 - No account or login is needed. Type any nickname (or leave it blank) on the first screen and tap "Vamos lá!".
-- All content (22 lessons, 242 questions) is bundled in the app. It makes no network requests.
+- All content (43 lessons, 551 questions) is bundled in the app. It makes no network requests.
 - No ads, no in-app purchases, no third-party SDKs or analytics, no external links.
 - "Sardinhas" (fish) are in-game points earned by answering questions. They cannot be purchased.
 - No data is collected. The nickname and progress are stored only on the device (UserDefaults, declared in the privacy manifest).

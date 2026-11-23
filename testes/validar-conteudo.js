@@ -37,6 +37,7 @@ for (const m of window.DEJAIR_CONTEUDO) {
       if (!q.e) erros.push(`${oq}: falta a explicação (e)`);
       if (q.p && semTags(q.p).length > 190) avisos.push(`${oq}: pergunta longa (${semTags(q.p).length})`);
       if (q.e && semTags(q.e).length > 240) avisos.push(`${oq}: explicação longa (${semTags(q.e).length})`);
+      if ('x' in q) { if (typeof q.x !== 'string' || !q.x) erros.push(`${oq}: o texto de apoio (x) deve ser um texto`); else if (semTags(q.x).length > 640) avisos.push(`${oq}: texto de apoio longo (${semTags(q.x).length})`); }
       if ('r' in q && q.t !== 'vf') erros.push(`${oq}: só "vf" usa o campo r`);
       if (q.t === 'vf') {
         if (typeof q.r !== 'boolean') erros.push(`${oq}: vf precisa de r: true ou false`);

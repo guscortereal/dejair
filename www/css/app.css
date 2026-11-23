@@ -207,6 +207,31 @@ input[type=text]:focus { border-color: var(--roxo); }
 .gabarito { margin-top: 14px; background: #fff; border-radius: 14px; padding: 11px 14px; font-size: .96rem; box-shadow: var(--sombra); }
 .gabarito ol, .gabarito ul { margin: 4px 0 0; padding-left: 22px; }
 
+/* texto de apoio da questão (campo x): crônica, anúncio, tabela, gráfico ou figura */
+.apoio { background: #fff; border-radius: 18px; border-top: 6px solid var(--cor); padding: 13px 15px 14px; margin-bottom: 16px; box-shadow: var(--sombra); font-size: 1rem; line-height: 1.45; overflow-x: auto; -webkit-user-select: text; user-select: text; }
+.apoio h4 { margin: 0 0 6px; font: 600 1.06rem/1.25 'Fredoka', 'Nunito', sans-serif; color: var(--cor); }
+.apoio p + p { margin-top: 8px; }
+.apoio small { display: block; margin-top: 7px; font-size: .8rem; }
+.apoio table { width: 100%; border-collapse: collapse; font-size: .97rem; }
+.apoio th, .apoio td { border: 1.5px solid var(--linha-esc); padding: 6px 8px; text-align: center; }
+.apoio th { background: #F7F1E6; font-weight: 800; } .apoio td:first-child, .apoio th:first-child { text-align: left; }
+.anuncio { display: grid; gap: 6px; justify-items: center; text-align: center; border: 2.5px dashed var(--cor); border-radius: 14px; padding: 12px 10px; }
+.anuncio .an-t { font: 700 1.5rem/1.15 'Fredoka', 'Nunito', sans-serif; color: var(--cor); text-transform: uppercase; }
+.anuncio .an-s { font: 600 1.12rem/1.2 'Fredoka', 'Nunito', sans-serif; }
+.anuncio .an-m { font-weight: 800; font-size: .9rem; background: var(--cor); color: #fff; border-radius: 99px; padding: 3px 12px; }
+.fig { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.fig .tr { fill: none; stroke: var(--tinta); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.fig .fi { fill: none; stroke: var(--cor); stroke-width: 2.5; }
+.fig .ch { fill: var(--cor); fill-opacity: .8; }
+.fig .pl { fill: var(--cor); fill-opacity: .2; stroke: var(--cor); stroke-width: 3; stroke-linejoin: round; }
+.fig .gr { fill: none; stroke: var(--linha-esc); stroke-width: 1.2; }
+.fig .ex { fill: none; stroke: var(--tinta); stroke-width: 1.6; }
+.fig text { font: 700 12px 'Nunito', system-ui, sans-serif; fill: var(--suave); }
+.rev .apoio { box-shadow: none; border: 1.5px solid var(--linha); border-top: 6px solid var(--cor); margin: 0 0 10px; font-size: .95rem; }
+/* fração escrita com numerador sobre denominador */
+.fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.08; font-size: .84em; margin: 0 .14em; }
+.fr > span { padding: 0 .28em; } .fr > span:first-child { border-bottom: .1em solid currentColor; }
+
 .retorno { position: sticky; bottom: 0; margin: auto -16px 0; padding: 14px 16px calc(16px + var(--base-segura)); border-radius: 22px 22px 0 0; animation: sobe .28s cubic-bezier(.2, 1.2, .5, 1); z-index: 6; box-shadow: 0 -8px 24px rgba(45, 49, 66, .12); }
 @keyframes sobe { from { transform: translateY(60%); opacity: 0; } }
 .retorno.bom { background: #D9F5E9; --cor: var(--verde); color: #0B4D3C; }
